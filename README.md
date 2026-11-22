@@ -1,40 +1,40 @@
 # Monitor LG
 
-Ícono en la bandeja de Windows que apaga y prende un monitor LG cortándole la señal. Probado con mouse y teclado
-simulados por software: no lo despertaron.
+A Windows tray icon that turns an LG monitor off and on by cutting its signal. Tested with mouse and keyboard input
+simulated by software: it didn't wake the monitor.
 
-## Uso
+## Usage
 
-* Clic izquierdo en el ícono o `Ctrl+Alt+F10`: apaga o prende.
-* Clic derecho > *Salir*: prende el monitor y cierra el programa.
-* Por comando: `MonitorLG.exe apagar | encender | alternar | salir`.
+* Left-click the icon or press `Ctrl+Alt+F10`: turns the monitor off or on.
+* Right-click > *Salir* (Exit): turns the monitor on and closes the app.
+* From the command line: `MonitorLG.exe apagar | encender | alternar | salir` (off | on | toggle | exit).
 
-## Instalación
+## Installation
 
-Requisitos: Windows x64 con .NET Framework 4.x y el driver Parsec VDD (probado con 0.45).
+Requirements: Windows x64 with .NET Framework 4.x and the Parsec VDD driver (tested with 0.45).
 
-Ejecutá `dist\MonitorLGSetup.exe`. Instala para el usuario actual, sin admin, en `%LOCALAPPDATA%\Programs\MonitorLG`,
-con acceso en el menú Inicio e inicio con Windows opcional. Se desinstala desde Configuración > Aplicaciones.
+Run `dist\MonitorLGSetup.exe`. It installs for the current user, without admin, in `%LOCALAPPDATA%\Programs\MonitorLG`,
+with a Start menu shortcut and optional start with Windows. Uninstall it from Settings > Apps.
 
-Sin ventana: `MonitorLGSetup.exe /S`, y `/sin-inicio` para que no arranque con Windows.
+Without a window: `MonitorLGSetup.exe /S`, plus `/sin-inicio` to keep it from starting with Windows.
 
-## Compilar
+## Building
 
-`build.cmd`. Usa el `csc.exe` incluido en Windows, sin dependencias.
+`build.cmd`. It uses the `csc.exe` included with Windows, with no dependencies.
 
-## Cómo funciona
+## How it works
 
-No usa DDC/CI para apagar: en el LG ULTRAGEAR probado (GSM5BB2, DisplayPort), los valores `04` y `05` del código `D6`
-se enviaron sin error y el monitor siguió informando "encendido".
+It doesn't use DDC/CI to turn the monitor off: on the LG ULTRAGEAR tested (GSM5BB2, DisplayPort), values `04` and `05`
+of code `D6` were sent without error and the monitor kept reporting "on".
 
-En su lugar crea una pantalla virtual con Parsec VDD, pasa el escritorio ahí y desactiva la salida del LG. La
-configuración no se guarda en Windows. Si el programa se cierra de golpe, el driver retira la pantalla virtual y
-Windows vuelve al LG.
+Instead, it creates a virtual screen with Parsec VDD, moves the desktop there and disables the LG's output. That
+display layout isn't saved in Windows. If the app is closed abruptly, the driver removes the virtual screen and
+Windows goes back to the LG.
 
-## Limitaciones
+## Limitations
 
-* No es un apagado como el del botón: el monitor queda sin señal.
-* Considera LG a todo monitor con código de fabricante `GSM`, y los apaga a todos.
-* No probado: mouse y teclado físicos, el clic en el ícono, el inicio con Windows tras reiniciar, y suspender o
-  cerrar sesión con el monitor apagado.
-* El log queda en `%TEMP%\MonitorLG.log`.
+* It isn't the same as turning it off with the power button: the monitor is left without a signal.
+* It treats every monitor with the `GSM` manufacturer code as an LG, and turns all of them off.
+* Not tested: physical mouse and keyboard, clicking the icon, start with Windows after a reboot, and sleep or signing
+  out with the monitor off.
+* The log is written to `%TEMP%\MonitorLG.log`.
