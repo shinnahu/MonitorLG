@@ -1,0 +1,7 @@
+# salida de build.cmd
+dist/
+
+# primeros intentos (DDC/CI y apagado de Windows), reemplazados por MonitorLG
+descartado/
+
+*.log
